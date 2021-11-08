@@ -1,0 +1,1 @@
+sudo setfacl -m u:www-data:rwx -R /home/dmolinaq/Documents/photoproceeding/photoproceeding/storage/ && sudo setfacl -m u:www-data:rwx -R /home/dmolinaq/Documents/photoproceeding/photoproceeding/bootstrap/cache/

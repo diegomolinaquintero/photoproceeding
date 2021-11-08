@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Image;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+
+//     $images = Image::all();
+//     foreach ($images as $image) {
+//         echo $image->id . '<br>';
+//         echo $image->image_path . '<br>';
+//         echo $image->created_at . '<br>';
+//         echo $image->updated_at . '<br>';
+//         echo $image->user->surname . '<br>';
+//         foreach ($image->comments as $comment) {
+//             echo $comment->id . '<br>';
+//             echo $comment->user->name . '<br>';
+//             echo $comment->content . '<br>';
+//         }
+//     }
+//     die();
+//     // return view('welcome');
+// });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
