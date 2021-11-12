@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Photo proceeding'),
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +175,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Custom Service Providers (Alerts)
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+
+
     ],
 
     /*
@@ -228,6 +232,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        // Custom Facades (alerts)
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
 
     ],
 
