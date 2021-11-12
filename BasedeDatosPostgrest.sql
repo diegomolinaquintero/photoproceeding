@@ -1,6 +1,9 @@
 -- Crear una base de datos en postgres llamada laravel_master con un usuario llamado photosadmin y una contraseña llamada 123
 -- Luego ejecutar este codigo con datos de prueba en postgres:
 
+
+CREATE EXTENSION pgcrypto;
+
 CREATE TABLE IF NOT EXISTS users(
 id              SERIAL not null,
 role            varchar(20),
@@ -16,9 +19,9 @@ remember_token  varchar(255),
 CONSTRAINT pk_users PRIMARY KEY(id)
 );
 
-INSERT INTO users VALUES(DEFAULT, 'user', 'Diego', 'Molina', 'diegomolina', 'diego@diego.com', 'pass', null, NOW(), NOW(), NULL);
-INSERT INTO users VALUES(DEFAULT, 'user', 'Julieth', 'Vargas', 'Juliethvar', 'juli@juli.com', 'pass', null, NOW(), NOW(), NULL);
-INSERT INTO users VALUES(DEFAULT, 'user', 'Pepito', 'Perez', 'pepitos', 'pepito@pepito', 'pass', null, NOW(), NOW(), NULL);
+INSERT INTO users VALUES(DEFAULT, 'user', 'Diego', 'Molina', 'diegomolina', 'diego@diego.com', crypt('123',gen_salt('bf')), null, NOW(), NOW(), NULL);
+INSERT INTO users VALUES(DEFAULT, 'user', 'Julieth', 'Vargas', 'Juliethvar', 'juli@juli.com', crypt('123',gen_salt('bf')), null, NOW(), NOW(), NULL);
+INSERT INTO users VALUES(DEFAULT, 'user', 'Pepito', 'Perez', 'pepitos', 'pepito@pepito', crypt('123',gen_salt('bf')), null, NOW(), NOW(), NULL);
 
 CREATE TABLE IF NOT EXISTS images(
 id              SERIAL not null,
@@ -69,3 +72,5 @@ INSERT INTO likes VALUES(DEFAULT, 2, 4, NOW(), NOW());
 INSERT INTO likes VALUES(DEFAULT, 3, 1, NOW(), NOW());
 INSERT INTO likes VALUES(DEFAULT, 3, 2, NOW(), NOW());
 INSERT INTO likes VALUES(DEFAULT, 2, 1, NOW(), NOW());
+
+
