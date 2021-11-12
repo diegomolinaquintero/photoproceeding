@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Image;
+use  App\Http\Controllers\UserController;
+// use App\Http\Controllers\Web\HomeController;
+use  App\Http\Controllers\HomeController;
+// use HomeController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,8 +40,11 @@ use App\Models\Image;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+Route::get('/configuracion', [UserController::class, 'config'])->name('configuracion');
+Route::post('/configuracion/edit', [UserController::class, 'update'])->name('editConfig');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
