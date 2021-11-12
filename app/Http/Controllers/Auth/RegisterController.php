@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Alert;
 
 class RegisterController extends Controller
 {
@@ -19,7 +20,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -42,7 +43,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
 			'surname' => 'required|string|max:255',
-			'nick' => 'required|string|max:255',
+			'nick' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -56,6 +57,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        Alert::info('Registro exitoso', 'Se ha guardado la información correctamente');
         return User::create([
 			'role' => 'user',
             'name' => $data['name'],
