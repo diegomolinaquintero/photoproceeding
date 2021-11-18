@@ -55,44 +55,45 @@ class UserController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            // $ruta = request()->image->store('public/eventos/adjuntos/multimedia/'.Auth::user()->id);
+            // $ruta = request()->image->store('public/users/'.Auth::user()->id);
 
-            // if ($ruta) {
-            //     $archivo_adjunto = (new Evento\Adjunto())->forceFill([
-            //         'usuario_id' => $request->user()->id,
-            //         'evento_id' => $evento->id,
-            //         'ruta' => $ruta,
-            //         'descripcion' => $input->descripcion,
-            //         'tipo_adjunto_id' => $input->tipo_adjunto_id,
-            //         'nombre' => $input->nombre,
-            //         'hashName' => request()->adjunto->hashName(),
-            //     ]);
-            //     if (! $archivo_adjunto->save()) {
-            //         setAlert('danger', 'Ha ocurrido un problema al guardar el archivo '.$name);
-    
-            //         return redirect()->back()->withErrors($validator)->withInput();
-            //     }
-            // } else {
-            //     setAlert('danger', '2Ha ocurrido un problema al guardar el archivo '.$name);
-    
-            //     return redirect()->back()->withErrors($validator)->withInput();
-            // }
-            // setAlert('success', 'Se ha actualizado la información correctamente del evento '.$evento->id);
-    
-            // return redirect(route('completar.furi.multimedia', ['evento_id' =>  $evento->id, 'furi_id' => $furi_id]));
+            // dd($ruta);
+            if (is_null($request->image)) {
+                $user->fill($request->input());
+                if ($user->save()) {
+                    Alert::success('Actualización correcta', 'Se ha actualizado la información correctamente');
 
-            $user->fill($request->input());
-            if ($user->save()) {
-                Alert::success('Actualización correcta', 'Se ha actualizado la información correctamente');
-
-                return redirect()->route('configuracion');
+                    return redirect()->route('configuracion');
+                } else {
+                    Alert::warning('Error al guardar la información', 'Por favor intenta nuevamente.');
+                }
             } else {
-                Alert::warning('Error al guardar la información', 'Por favor intenta nuevamente.');
+                $name = request()->image->getClientOriginalName();
+                $ext = request()->image->getClientOriginalExtension();
+                $user->image = request()->image->storeAs('users/'.Auth::user()->id, Auth::user()->id.'.'.$ext,'public');
+                if ($user->image){
+                    // $ruta = request()->image->store('public/users/'.Auth::user()->id);
+                    $user->name = $request->name;
+                    $user->surname = $request->surname;
+                    $user->nick = $request->nick;
+                    $user->email = $request->email;
+                    // $user->image = $ruta;
+                    if ($user->save()) {
+                        Alert::success('Actualización correcta', 'Se ha actualizado la información correctamente');
+        
+                        return redirect()->route('configuracion');
+                    } else {
+                        Alert::warning('Error al guardar la información', 'Por favor intenta nuevamente.');
+                    }
+                } else {
+                    Alert::danger('Ha ocurrido un problema al guardar el archivo', 'Mensaje del sistema');
+                    return redirect()->back();
+                }    
             }
+            
         } else {
-            Alert::error('Error al buscar la información', 'No se encuentra la información solicitada o no tienes permiso para acceder a ella');
+            Alert::warning('Error al guardar la información', 'Por favor intenta nuevamente.');
+            return redirect()->back();
         }
-
-        return redirect()->back();
     }
 }
