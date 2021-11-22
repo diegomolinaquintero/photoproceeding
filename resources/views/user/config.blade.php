@@ -80,9 +80,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            {{-- import image  --}}
                             <label for="image" class="col-md-4 col-form-label text-md-right">Vista previa imagen de perfil</label>
-                            <img src="{{ asset('storage/'.$userlog->image) }}" alt=""  class="col-md-4 col-form-label text-md-right">
+                            @include('includes.avatar')
                         </div>
 
                         {{-- <div class="form-group row">

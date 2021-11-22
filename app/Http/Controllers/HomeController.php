@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// import user model
+use App\Models\User;
+// import auth facade
+use Auth;
+// import image model
+use App\Models\Image;
 
 class HomeController extends Controller
 {
@@ -23,6 +29,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $userlog = Auth::user();
+        $imagenes = Image::where('image_path','LIKE', '%content%')->orderBy('created_at', 'desc')->get();
+        return view('home',compact('userlog','imagenes'));
     }
 }

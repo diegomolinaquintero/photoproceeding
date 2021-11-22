@@ -19,9 +19,15 @@ use Storage;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        return view('user.index');
+        $userlog = Auth::user();
+        return view('user.index',compact('userlog'));
     }
 
     public function config () {
@@ -68,7 +74,7 @@ class UserController extends Controller
                     Alert::warning('Error al guardar la información', 'Por favor intenta nuevamente.');
                 }
             } else {
-                $name = request()->image->getClientOriginalName();
+                // $name = request()->image->getClientOriginalName();
                 $ext = request()->image->getClientOriginalExtension();
                 $user->image = request()->image->storeAs('users/'.Auth::user()->id, Auth::user()->id.'.'.$ext,'public');
                 if ($user->image){

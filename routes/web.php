@@ -5,6 +5,8 @@ use  App\Http\Controllers\UserController;
 // use App\Http\Controllers\Web\HomeController;
 use  App\Http\Controllers\HomeController;
 // use HomeController;
+// use imagecontroller;
+use App\Http\Controllers\ImageController;
 
 
 
@@ -41,10 +43,10 @@ use  App\Http\Controllers\HomeController;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
 Route::get('/configuracion', [UserController::class, 'config'])->name('configuracion');
 Route::post('/configuracion/edit', [UserController::class, 'update'])->name('editConfig');
-
+Route::get('/cargarImagen', [ImageController::class, 'create'])->name('uploadimage');
+Route::post('/cargarImagen', [ImageController::class, 'store'])->name('uploadimageok');
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
