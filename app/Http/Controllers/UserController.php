@@ -45,7 +45,7 @@ class UserController extends Controller
                 'surname' => ['required'],
                 'email' => ['required', 'email'],
                 'nick' => ['required'],
-                'image' => 'file|mimes:jpeg,jpg,bmp,png,avi,mpeg,mp4,pdf|max:20000',
+                'image' => 'file|mimes:jpeg,jpg,bmp,png,avi,mpeg,mp4,pdf|max:10240',
             ];
             if ($user->nick != $request->nick) {
                 array_push($array_files_validacion['nick'], 'unique:users');

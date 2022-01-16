@@ -45,7 +45,7 @@ class ImageController extends Controller
         // model images
         $image = new Image;
         $array_files_validacion = [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'description' => ['required'],
         ];
 
