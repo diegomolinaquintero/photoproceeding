@@ -14,6 +14,8 @@ use Validator;
 Use Alert;
 // import storage facade
 use Storage;
+// import comments model
+use App\Models\Comment;
 
 class ImageController extends Controller
 {
@@ -68,6 +70,28 @@ class ImageController extends Controller
         } else {
             Alert::danger('Ha ocurrido un problema al guardar el archivo', 'Mensaje del sistema');
             return redirect()->back();
+        }
+    }
+
+    public function show($id)
+    {
+        $imagen = Image::find($id);
+        $userlog = Auth::user();
+        return view('image.show',compact('imagen','userlog'));
+    }
+
+    public function storeComment(Request $request, $id)
+    {
+        $image = Image::find($id);
+        $comment = new Comment;
+        $comment->content = $request->content;
+        $comment->image_id = $image->id;
+        $comment->user_id = Auth::user()->id;
+        if ($comment->save()) {
+            Alert::success('Comentario guardado', 'Se ha guardado tu comentario correctamente');
+            return redirect()->route('showimage',$image->id);
+        } else {
+            Alert::warning('Error al guardar la información', 'Por favor intenta nuevamente.');
         }
     }
 }   

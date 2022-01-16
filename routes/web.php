@@ -47,6 +47,10 @@ Route::get('/configuracion', [UserController::class, 'config'])->name('configura
 Route::post('/configuracion/edit', [UserController::class, 'update'])->name('editConfig');
 Route::get('/cargarImagen', [ImageController::class, 'create'])->name('uploadimage');
 Route::post('/cargarImagen', [ImageController::class, 'store'])->name('uploadimageok');
+// imagen show by id
+Route::get('/imagen/{id}', [ImageController::class, 'show'])->name('showimage');
+// save comments
+Route::post('/imagen/comentar', [ImageController::class, 'storeComment'])->name('savecomment');
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
