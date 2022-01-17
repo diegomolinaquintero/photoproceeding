@@ -29,10 +29,61 @@
                                     </div>
                                     <div class="card-footer text-muted pull-right">
                                         <div class="float-left">
-                                            {{-- button for comments --}}
-                                            <a href="" class="btn btn-primary pull-right ">Comentarios ({{ count($imagen->comments) }})</a>
-                                            {{-- button for likes --}}
-                                            <img src="{{ asset('imagenlike/like1.png') }}" alt="">
+                                            <div class="container">
+                                                {{-- button for likes --}}
+                                                <div class="row">
+                                                    <br>
+                                                    <img class="float-left" src="{{ asset('imagenlike/like1.png') }}" alt="">
+                                                    <br>
+                                                </div>
+                                                <div class="row">
+                                                    {{-- button for comments
+                                                    <h3 class="col-6 col-sm-3">Comentarios ({{ count($imagen->comments) }})</h3> --}}
+                                                    {{-- form by comments --}}
+                                                    <div>
+                                                        <form class="form-inline" action="{{ route('savecomment') }}" method="POST">
+                                                            @csrf
+                                                            <div class="form-group row">
+                                                                <input type="hidden" name="image_id" value="{{ $imagen->id }}">
+                                                                <input type="text" name="comentarios" id="comentarios" class="form-control @error('comentarios') is-invalid @enderror" required>
+                                                                
+                                                                @error('comentarios')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                                @enderror
+                                                                {{-- <input id="commentarios" type="text" class="form-control "  placeholder="Comentar" style="height: 100px"> --}}
+                                                                
+                                                                <button type="submit" class="btn btn-primary col-form-label">
+                                                                    Comentar
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <br>
+                                                    {{-- comments --}}
+                                                    <div>
+                                                        <div class="form-group bordered">
+                                                            <br>
+                                                            <label for="comments" class=" col-form-label">Comentarios ({{ count($imagen->comments) }})</label>
+                                                        </div>
+                                                        @foreach ($imagen->comments as $comment)
+                                                        <div class="form-group bordered">
+                                                                <p class="card-text">
+                                                                    <div class="float-left">
+                                                                        <div> 
+                                                                            <span class="float-left">{{ $comment->content }} </span>
+                                                                            <br>
+                                                                            <span class="float-left">by {{ $comment->user->name }}</span>
+                                                                            <span class="float-left small">at {{ $comment->created_at->diffForHumans() }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </p>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

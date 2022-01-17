@@ -80,16 +80,28 @@ class ImageController extends Controller
         return view('image.show',compact('imagen','userlog'));
     }
 
-    public function storeComment(Request $request, $id)
+    public function storeComment(Request $request)
     {
-        $image = Image::find($id);
+        // dd($request);
+        $array_files_validacion = [
+            
+            'comentarios' => ['required'],
+        ];
+
+        $validator = Validator::make($request->all(), $array_files_validacion);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $image = Image::find($request->image_id);
         $comment = new Comment;
-        $comment->content = $request->content;
-        $comment->image_id = $image->id;
+        $comment->content = $request->comentarios;
+        $comment->image_id = $request->image_id;
         $comment->user_id = Auth::user()->id;
         if ($comment->save()) {
             Alert::success('Comentario guardado', 'Se ha guardado tu comentario correctamente');
-            return redirect()->route('showimage',$image->id);
+            return redirect()->route('showimage',$request->image_id);
         } else {
             Alert::warning('Error al guardar la información', 'Por favor intenta nuevamente.');
         }
