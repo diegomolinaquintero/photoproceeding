@@ -1,3 +1,19 @@
+Para instalar este aplicativo es necesarios clonarlo desde git
+
+Luego deberes tener apache y el modulo de postgres y php activado en este.
+
+luego debes crear una base de datos con los nombres, usuairos y contrase;as que aparecen en el archivo .env
+
+Cuando tengas todo esto debes crear un link simbolico ya que si usan php artisan serve no te dejara guardar la multimedia.
+
+por ultimo modifica en php.ini lo siguiente
+upload_max_filesize = 500M
+post_max_size = 500M
+php_value upload_max_filesize 500M
+php_value post_max_size 500M
+
+Luego de esto disfruta tu nuevo peque;o de instagram 
+
 <p align="center"><a href="https://github.com/diegomolinaquintero?tab=repositories" target="_blank"><img src="logoPP.png" width="400"></a></p>
 
 <!-- <p align="center">
